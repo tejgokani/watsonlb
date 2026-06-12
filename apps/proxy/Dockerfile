@@ -12,6 +12,7 @@ RUN pnpm install --frozen-lockfile --filter @watsonlb/proxy... --prod=false
 # ── Build ─────────────────────────────────────────────────────────────────────
 FROM deps AS builder
 WORKDIR /app
+COPY tsconfig.base.json ./
 COPY packages/shared ./packages/shared
 COPY apps/proxy ./apps/proxy
 RUN pnpm --filter @watsonlb/shared run build
