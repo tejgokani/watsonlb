@@ -1,0 +1,18 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "proxy",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@watsonlb/proxy", "run", "dev"],
+      "port": 3001,
+      "autoPort": false
+    },
+    {
+      "name": "dashboard",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@watsonlb/dashboard", "run", "dev"],
+      "port": 3000
+    }
+  ]
+}

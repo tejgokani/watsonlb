@@ -1,0 +1,30 @@
+# WatsonLB Dashboard — Fly.io config
+# Deploy: fly deploy --config apps/dashboard/fly.toml
+
+app = "watsonlb-dashboard"
+primary_region = "bom"
+
+[build]
+  dockerfile = "apps/dashboard/Dockerfile"
+
+[env]
+  NODE_ENV = "production"
+  PORT = "3000"
+  NEXT_PUBLIC_API_URL = "https://watsonlb-proxy.fly.dev"
+  NEXT_PUBLIC_PROXY_URL = "https://watsonlb-proxy.fly.dev"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 1
+
+  [http_service.concurrency]
+    type = "requests"
+    hard_limit = 250
+    soft_limit = 200
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"

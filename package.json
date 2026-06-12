@@ -1,0 +1,19 @@
+{
+  "name": "watsonlb",
+  "private": true,
+  "version": "0.0.1",
+  "packageManager": "pnpm@10.23.0",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "db:generate": "turbo run db:generate",
+    "db:migrate": "turbo run db:migrate"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.4",
+    "typescript": "^5.8.3",
+    "@types/node": "^22.15.21"
+  }
+}

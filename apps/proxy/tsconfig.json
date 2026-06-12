@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "paths": {
+      "@watsonlb/shared": ["../../packages/shared/dist/index.d.ts"]
+    }
+  },
+  "include": ["src"]
+}
