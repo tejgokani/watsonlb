@@ -1,7 +1,0 @@
-{
-  "framework": "nextjs",
-  "buildCommand": "pnpm --filter @watsonlb/shared run build && pnpm --filter @watsonlb/dashboard run build",
-  "outputDirectory": "apps/dashboard/.next",
-  "installCommand": "pnpm install --frozen-lockfile",
-  "rewrites": []
-}
