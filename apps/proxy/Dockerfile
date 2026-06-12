@@ -31,9 +31,12 @@ RUN pnpm install --frozen-lockfile --filter @watsonlb/proxy... --prod
 
 COPY --from=builder /app/apps/proxy/dist ./apps/proxy/dist
 COPY --from=builder /app/packages/shared/dist ./packages/shared/dist
+# SQL migration files are not compiled by tsc — copy them manually
+COPY --from=builder /app/apps/proxy/src/db/migrations ./apps/proxy/dist/db/migrations
 
 WORKDIR /app/apps/proxy
 ENV NODE_ENV=production
 EXPOSE 3001
 
-CMD ["node", "dist/index.js"]
+# Run migrations then start the server
+CMD ["sh", "-c", "node dist/db/migrate.js && node dist/index.js"]
