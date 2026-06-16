@@ -1,0 +1,51 @@
+services:
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile.dashboard
+    ports:
+      - "${DASHBOARD_PORT:-5100}:5000"
+    environment:
+      - MASTER_HOST=${MASTER_HOST:-locust-master}
+      - MASTER_PORT=${MASTER_PORT:-8089}
+    volumes:
+      - ./dashboard:/app
+      - ./reports:/app/reports
+    depends_on:
+      - locust-master
+    networks:
+      - osmium-net
+
+  locust-master:
+    image: locustio/locust:latest
+    ports:
+      - "${LOCUST_WEB_PORT:-8089}:8089"
+    volumes:
+      - ./locust:/mnt/locust
+    working_dir: /mnt/locust
+    command: >
+      -f /mnt/locust/locustfile.py
+      --master
+      --web-port 8089
+      --web-host 0.0.0.0
+      --host ${TARGET_URL:-https://example.com}
+    networks:
+      - osmium-net
+
+  locust-worker:
+    image: locustio/locust:latest
+    volumes:
+      - ./locust:/mnt/locust
+    working_dir: /mnt/locust
+    command: >
+      -f /mnt/locust/locustfile.py
+      --worker
+      --master-host locust-master
+    depends_on:
+      - locust-master
+    networks:
+      - osmium-net
+
+networks:
+  osmium-net:
+    driver: bridge
